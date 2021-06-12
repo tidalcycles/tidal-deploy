@@ -75,7 +75,6 @@ RUN mkdir -p my-program/c-libs && \
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/base-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/binary-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/bytestring-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/Cabal-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/containers-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/deepseq-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
 	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/directory-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
@@ -125,7 +124,6 @@ RUN mkdir -p my-program/c-libs && \
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/base-*.conf && \ 
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/binary-*.conf && \ 
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/bytestring-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/Cabal-*.conf && \ 
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/containers-*.conf && \ 
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/deepseq-*.conf && \ 
 	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/directory-*.conf && \ 
