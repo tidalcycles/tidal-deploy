@@ -7,5 +7,11 @@ COPY my-program.tar.gz /root/my-program.tar.gz
 
 RUN tar xvf my-program.tar.gz
 
+## Don't know why this is necessary..
+RUN ln -s librt.so.1      /lib/x86_64-linux-gnu/librt.so &&      \
+    ln -s libutil.so.1    /lib/x86_64-linux-gnu/libutil.so &&    \
+    ln -s libdl.so.2      /lib/x86_64-linux-gnu/libdl.so &&      \
+    ln -s libpthread.so.0 /lib/x86_64-linux-gnu/libpthread.so
+
 WORKDIR /root/my-program
 CMD ["./my-program"]
