@@ -4,187 +4,189 @@ MAINTAINER Samuel Gélineau <gelisam@gmail.com>
 
 WORKDIR /root
 
-COPY my-program.cabal /root/my-program.cabal
+COPY tidal-listener.cabal /root/tidal-listener.cabal
 COPY Setup.hs         /root/Setup.hs
 RUN cabal v1-update && \
     cabal sandbox init && \
     cabal v1-install --only-dependencies
 
-RUN mkdir -p my-program/c-libs && \
-    cp /usr/lib/x86_64-linux-gnu/libgmp.so.10                           my-program/c-libs/ && \
-    cp /lib/x86_64-linux-gnu/libtinfo.so.5                              my-program/c-libs/ && \
-    ln -s libtinfo.so.5 						my-program/c-libs/libtinfo.so && \
-    ln -s libgmp.so.10                                                  my-program/c-libs/libgmp.so && \
-    mkdir -p my-program/haskell-libs && \
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/llvm-targets                               my-program/haskell-libs/ && \
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/llvm-passes                              my-program/haskell-libs/ && \
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/rts                               my-program/haskell-libs/ && \
+RUN mkdir -p tidal-listener/c-libs && \
+    cp /usr/lib/x86_64-linux-gnu/libgmp.so.10                          tidal-listener/c-libs/ && \
+    cp /lib/x86_64-linux-gnu/libtinfo.so.5                              tidal-listener/c-libs/ && \
+    ln -s libtinfo.so.5 						tidal-listener/c-libs/libtinfo.so && \
+    ln -s libgmp.so.10                                                  tidal-listener/c-libs/libgmp.so && \
+    mkdir -p tidal-listener/haskell-libs && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/llvm-targets                               tidal-listener/haskell-libs/ && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/llvm-passes                              tidal-listener/haskell-libs/ && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/rts                               tidal-listener/haskell-libs/ && \
 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/array-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/base-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/binary-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/bytestring-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/containers-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/deepseq-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/directory-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/filepath-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-prim-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-boot-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-boot-th-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-compact-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-heap-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/haskeline-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/hpc-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/integer-gmp-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/libiserv-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/mtl-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/parsec-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/pretty-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/process-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/stm-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/template-haskell-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/terminfo-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/text-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/time-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/transformers-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/unix-*                              my-program/haskell-libs/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/xhtml-*                              my-program/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/array-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/base-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/binary-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/bytestring-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/containers-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/deepseq-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/directory-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/filepath-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-prim-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-boot-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-boot-th-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-compact-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/ghc-heap-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/haskeline-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/hpc-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/integer-gmp-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/libiserv-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/mtl-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/parsec-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/pretty-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/process-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/stm-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/template-haskell-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/terminfo-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/text-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/time-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/transformers-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/unix-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/xhtml-*                              tidal-listener/haskell-libs/ && \ 
  
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/tidal-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/bifunctors-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/clock-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/colour-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/hosc-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/network-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/primitive-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/random-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/base-orphans-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/comonad-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/tagged-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/th-abstraction-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/distributive-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/indexed-traversable-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/transformers-compat-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/splitmix-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/blaze-builder-*                              my-program/haskell-libs/ && \ 
-	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/data-binary-ieee754-*                              my-program/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/tidal-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/bifunctors-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/clock-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/colour-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/hosc-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/network-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/primitive-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/random-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/base-orphans-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/comonad-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/tagged-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/th-abstraction-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/distributive-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/indexed-traversable-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/transformers-compat-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/splitmix-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/blaze-builder-*                              tidal-listener/haskell-libs/ && \ 
+	cp -r .cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/data-binary-ieee754-*                              tidal-listener/haskell-libs/ && \ 
 
-	mkdir -p                                                               my-program/haskell-libs/package.conf.d && \ 
+	mkdir -p                                                               tidal-listener/haskell-libs/package.conf.d && \ 
 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/array-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/base-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/binary-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/bytestring-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/containers-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/deepseq-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/directory-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/filepath-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-prim-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-boot-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-boot-th-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-compact-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-heap-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/haskeline-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/hpc-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/integer-gmp-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/libiserv-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/mtl-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/parsec-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/pretty-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/process-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/stm-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/template-haskell-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/terminfo-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/text-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/time-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/transformers-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/unix-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
-	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/xhtml-*.conf   my-program/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/array-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/base-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/binary-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/bytestring-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/containers-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/deepseq-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/directory-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/filepath-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-prim-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-boot-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-boot-th-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-compact-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/ghc-heap-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/haskeline-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/hpc-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/integer-gmp-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/libiserv-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/mtl-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/parsec-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/pretty-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/process-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/stm-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/template-haskell-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/terminfo-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/text-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/time-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/transformers-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/unix-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
+	cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/xhtml-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \ 
 
-	cp -r .cabal-sandbox/*-packages.conf.d/tidal-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/bifunctors-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/clock-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/colour-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/hosc-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/network-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/primitive-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/random-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/base-orphans-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/comonad-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/tagged-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/th-abstraction-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/distributive-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/indexed-traversable-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/transformers-compat-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/splitmix-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/blaze-builder-*.conf   my-program/haskell-libs/package.conf.d && \ 
-	cp -r .cabal-sandbox/*-packages.conf.d/data-binary-ieee754-*.conf   my-program/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/tidal-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/bifunctors-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/clock-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/colour-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/hosc-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/network-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/primitive-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/random-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/base-orphans-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/comonad-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/tagged-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/th-abstraction-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/distributive-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/indexed-traversable-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/transformers-compat-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/splitmix-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/blaze-builder-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
+	cp -r .cabal-sandbox/*-packages.conf.d/data-binary-ieee754-*.conf   tidal-listener/haskell-libs/package.conf.d && \ 
 	 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/array-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/base-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/binary-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/bytestring-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/containers-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/deepseq-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/directory-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/filepath-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/ghc-prim-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/ghc-boot-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/ghc-boot-th-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/ghc-compact-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/ghc-heap-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/haskeline-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/hpc-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/integer-gmp-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/libiserv-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/mtl-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/parsec-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/pretty-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/process-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/stm-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/template-haskell-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/terminfo-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/text-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/time-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/transformers-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/unix-*.conf && \ 
-	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/xhtml-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/array-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/base-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/binary-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/bytestring-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/containers-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/deepseq-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/directory-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/filepath-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/ghc-prim-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/ghc-boot-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/ghc-boot-th-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/ghc-compact-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/ghc-heap-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/haskeline-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/hpc-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/integer-gmp-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/libiserv-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/mtl-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/parsec-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/pretty-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/process-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/stm-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/template-haskell-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/terminfo-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/text-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/time-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/transformers-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/unix-*.conf && \ 
+	sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/xhtml-*.conf && \ 
 
 	 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/tidal-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/bifunctors-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/clock-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/colour-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/hosc-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/network-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/primitive-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/random-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/base-orphans-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/comonad-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/tagged-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/th-abstraction-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/distributive-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/indexed-traversable-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/transformers-compat-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/splitmix-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/blaze-builder-*.conf && \ 
-	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  my-program/haskell-libs/package.conf.d/data-binary-ieee754-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/tidal-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/bifunctors-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/clock-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/colour-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/hosc-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/network-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/primitive-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/random-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/base-orphans-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/comonad-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/tagged-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/th-abstraction-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/distributive-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/indexed-traversable-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/transformers-compat-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/splitmix-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/blaze-builder-*.conf && \ 
+	sed -i 's/\/root\/.cabal-sandbox\/lib\/x86_64-linux-ghc-8.6.5/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/data-binary-ieee754-*.conf && \ 
 		
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/rts.conf   my-program/haskell-libs/package.conf.d && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/package.conf.d/rts.conf   tidal-listener/haskell-libs/package.conf.d && \
 
-    sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g' my-program/haskell-libs/package.conf.d/rts.conf && \
+    sed -i 's/\/opt\/ghc\/8.6.5\/lib\/ghc-8.6.5/haskell-libs/g' tidal-listener/haskell-libs/package.conf.d/rts.conf && \
                                                                            
-    ghc-pkg --package-db=my-program/haskell-libs/package.conf.d recache && \
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/platformConstants my-program/haskell-libs/ && \
-    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/settings          my-program/haskell-libs/ && \
-    sed -i 's/gcc/bin\/fake_gcc.sh/g'                    my-program/haskell-libs/settings && \
-    mkdir -p my-program/bin
+    ghc-pkg --package-db=tidal-listener/haskell-libs/package.conf.d recache && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/platformConstants tidal-listener/haskell-libs/ && \
+    cp -r /opt/ghc/8.6.5/lib/ghc-8.6.5/settings          tidal-listener/haskell-libs/ && \
+    sed -i 's/gcc/bin\/fake_gcc.sh/g'                    tidal-listener/haskell-libs/settings && \
+    mkdir -p tidal-listener/bin
 
-COPY fake_gcc.sh /root/my-program/bin/fake_gcc.sh
+COPY fake_gcc.sh /root/tidal-listener/bin/fake_gcc.sh
 COPY src /root/src
+COPY app /root/app
+COPY LICENSE /root/LICENSE
 RUN cabal install && \
-    cp .cabal-sandbox/bin/my-program my-program/ && \
-    tar czvf my-program.tar.gz my-program
+    cp .cabal-sandbox/bin/tidal-listener tidal-listener/ && \
+    tar czvf tidal-listener.tar.gz tidal-listener
 
-WORKDIR /root/my-program
-CMD ["./my-program"]
+WORKDIR /root/tidal-listener
+CMD ["./tidal-listener"]

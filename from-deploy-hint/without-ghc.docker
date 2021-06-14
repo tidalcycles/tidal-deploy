@@ -3,15 +3,17 @@ FROM       debian:stretch
 MAINTAINER Samuel Gélineau <gelisam@gmail.com>
 
 WORKDIR /root
-COPY my-program.tar.gz /root/my-program.tar.gz
+COPY tidal-listener.tar.gz /root/tidal-listener.tar.gz
 
-RUN tar xvf my-program.tar.gz
+RUN tar xvf tidal-listener.tar.gz
 
 ## Don't know why this is necessary..
-RUN ln -s librt.so.1      /lib/x86_64-linux-gnu/librt.so &&      \
+RUN cp /root/tidal-listener/c-libs/libgmp.so.10    /lib/x86_64-linux-gnu/libgmp.so.10 &&\
+    ln -s libtinfo.so.1   /lib/x86_64-linux-gnu/libtinfo.so &&\
+    ln -s librt.so.1      /lib/x86_64-linux-gnu/librt.so &&      \
     ln -s libutil.so.1    /lib/x86_64-linux-gnu/libutil.so &&    \
     ln -s libdl.so.2      /lib/x86_64-linux-gnu/libdl.so &&      \
     ln -s libpthread.so.0 /lib/x86_64-linux-gnu/libpthread.so
 
-WORKDIR /root/my-program
-CMD ["./my-program"]
+WORKDIR /root/tidal-listener
+CMD ["./tidal-listener"]

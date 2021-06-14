@@ -8,15 +8,15 @@ all: test
 
 list_dependencies: proofs/$(WITH_GHC_IMAGE)
 	docker rm -vf $(WITH_GHC_CONTAINER) &> /dev/null || true
-	docker run -it --name $(WITH_GHC_CONTAINER) $(WITH_GHC_IMAGE) ldd /root/my-program/my-program
+	docker run -it --name $(WITH_GHC_CONTAINER) $(WITH_GHC_IMAGE) ldd /root/tidal-listener/tidal-listener
 
 build: proofs/$(WITHOUT_GHC_IMAGE)
 
 test: build
 	docker rm -vf $(WITHOUT_GHC_CONTAINER) &> /dev/null || true
-	echo '()' | docker run -i --name $(WITHOUT_GHC_CONTAINER) $(WITHOUT_GHC_IMAGE) /root/my-program/my-program
+	docker run -i --name $(WITHOUT_GHC_CONTAINER) $(WITHOUT_GHC_IMAGE) /root/tidal-listener/tidal-listener
 
-proofs/$(WITH_GHC_IMAGE): with-ghc.docker my-program.cabal src/Main.hs
+proofs/$(WITH_GHC_IMAGE): with-ghc.docker tidal-listener.cabal app/Main.hs
 	mkdir -p proofs
 	docker rmi $(WITH_GHC_IMAGE):latest &> /dev/null || true # prevent orphans
 	docker build -f $< -t $(WITH_GHC_IMAGE):latest . # fast if :cache contains shared work
@@ -24,7 +24,7 @@ proofs/$(WITH_GHC_IMAGE): with-ghc.docker my-program.cabal src/Main.hs
 	docker tag $(WITH_GHC_IMAGE):latest $(WITH_GHC_IMAGE):cache # cache for next time
 	touch $@
 
-proofs/$(WITHOUT_GHC_IMAGE): without-ghc.docker my-program.tar.gz
+proofs/$(WITHOUT_GHC_IMAGE): without-ghc.docker tidal-listener.tar.gz
 	mkdir -p proofs
 	docker build -f $< -t $(WITHOUT_GHC_IMAGE) .
 	touch $@
@@ -34,12 +34,12 @@ proofs/$(WITH_GHC_CONTAINER): proofs/$(WITH_GHC_IMAGE)
 	docker run --name $(WITH_GHC_CONTAINER) $(WITH_GHC_IMAGE) echo "built."
 	touch $@
 
-my-program.tar.gz: proofs/$(WITH_GHC_CONTAINER)
-	docker cp $(WITH_GHC_CONTAINER):/root/my-program.tar.gz $@
+tidal-listener.tar.gz: proofs/$(WITH_GHC_CONTAINER)
+	docker cp $(WITH_GHC_CONTAINER):/root/tidal-listener.tar.gz $@
 
 
 clean:
-	rm -rf my-program/
+	rm -rf tidal-listener/
 	docker rm -vf $(WITH_GHC_CONTAINER) $(WITHOUT_GHC_CONTAINER) || true
 	docker rmi $(WITH_GHC_IMAGE):latest || true
 	rm -rf proofs/
@@ -47,4 +47,4 @@ clean:
 clobber: clean
 	docker rmi $(WITH_GHC_IMAGE):cache || true
 	docker rmi $(WITHOUT_GHC_IMAGE) || true
-	rm -rf my-program.tar.gz
+	rm -rf tidal-listener.tar.gz

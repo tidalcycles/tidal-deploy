@@ -1,12 +1,10 @@
 import System.IO
 
-
 ghcLibs :: [String]
 ghcLibs = [ "array"
           , "base"
           , "binary"
           , "bytestring"
-          , "Cabal"
           , "containers"
           , "deepseq"
           , "directory"
@@ -56,34 +54,34 @@ libs = [ "tidal"
        ]
 
 mkdir :: String
-mkdir = "mkdir -p                                                               my-program/haskell-libs/package.conf.d && \\ \n"
+mkdir = "mkdir -p                                                               tidal-listener/haskell-libs/package.conf.d && \\ \n"
 
 ver :: String
 ver = "8.6.5"
 
 genGHC :: String -> [String] -> String
 genGHC version [] = ""
-genGHC version (x:xs) = "cp -r /opt/ghc/" ++ version ++ "/lib/ghc-" ++ version ++ "/" ++ x ++ "-*                              my-program/haskell-libs/ && \\ \n"  ++ (genGHC version xs)
+genGHC version (x:xs) = "cp -r /opt/ghc/" ++ version ++ "/lib/ghc-" ++ version ++ "/" ++ x ++ "-*                              tidal-listener/haskell-libs/ && \\ \n"  ++ (genGHC version xs)
 
 genGHC_conf :: String -> [String] -> String
 genGHC_conf version [] = ""
-genGHC_conf version (x:xs) = "cp -r /opt/ghc/" ++ version ++ "/lib/ghc-" ++ version ++ "/package.conf.d/" ++ x ++ "-*.conf   my-program/haskell-libs/package.conf.d/ && \\ \n" ++ (genGHC_conf version xs)
+genGHC_conf version (x:xs) = "cp -r /opt/ghc/" ++ version ++ "/lib/ghc-" ++ version ++ "/package.conf.d/" ++ x ++ "-*.conf   tidal-listener/haskell-libs/package.conf.d/ && \\ \n" ++ (genGHC_conf version xs)
 
 sedGHC_conf :: String -> [String] -> String
 sedGHC_conf version [] = ""
-sedGHC_conf version (x:xs) = "sed -i 's/\\/opt\\/ghc\\/" ++ version ++ "\\/lib\\/ghc-" ++ version ++ "/\\/root\\/my-program\\/haskell-libs/g'  my-program/haskell-libs/package.conf.d/" ++ x ++ "-*.conf && \\ \n" ++ (sedGHC_conf version xs)
+sedGHC_conf version (x:xs) = "sed -i 's/\\/opt\\/ghc\\/" ++ version ++ "\\/lib\\/ghc-" ++ version ++ "/\\/root\\/tidal-listener\\/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/" ++ x ++ "-*.conf && \\ \n" ++ (sedGHC_conf version xs)
 
 gen :: String -> [String] -> String
 gen version [] = ""
-gen version (x:xs) = "cp -r .cabal-sandbox/lib/x86_64-linux-ghc-" ++ version ++ "/" ++ x ++ "-*                              my-program/haskell-libs/ && \\ \n"  ++ (gen version xs)
+gen version (x:xs) = "cp -r .cabal-sandbox/lib/x86_64-linux-ghc-" ++ version ++ "/" ++ x ++ "-*                              tidal-listener/haskell-libs/ && \\ \n"  ++ (gen version xs)
 
 gen_conf :: String -> [String] -> String
 gen_conf version [] = ""
-gen_conf version (x:xs) = "cp -r .cabal-sandbox/*-packages.conf.d/" ++ x ++ "-*.conf   my-program/haskell-libs/package.conf.d && \\ \n" ++ (gen_conf version xs)
+gen_conf version (x:xs) = "cp -r .cabal-sandbox/*-packages.conf.d/" ++ x ++ "-*.conf   tidal-listener/haskell-libs/package.conf.d && \\ \n" ++ (gen_conf version xs)
 
 sed_conf :: String -> [String] -> String
 sed_conf version [] = ""
-sed_conf version (x:xs) = "sed -i 's/\\/root\\/.cabal-sandbox\\/lib\\/x86_64-linux-ghc-" ++ version ++ "/\\/root\\/my-program\\/haskell-libs/g'  my-program/haskell-libs/package.conf.d/" ++ x ++ "-*.conf && \\ \n" ++ (sed_conf version xs)
+sed_conf version (x:xs) = "sed -i 's/\\/root\\/.cabal-sandbox\\/lib\\/x86_64-linux-ghc-" ++ version ++ "/\\/root\\/tidal-listener\\/haskell-libs/g'  tidal-listener/haskell-libs/package.conf.d/" ++ x ++ "-*.conf && \\ \n" ++ (sed_conf version xs)
 
 main :: IO ()
 main = do
