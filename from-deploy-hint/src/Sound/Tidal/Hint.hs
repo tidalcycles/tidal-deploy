@@ -52,7 +52,7 @@ libs = [
   , "GHC.Real"
   ]
 
-libdir = "/root/tidal-listener/haskell-libs"
+libdir = "/haskell-libs"
 
 exts = [OverloadedStrings, NoImplicitPrelude]
 
