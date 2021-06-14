@@ -2,7 +2,7 @@ module Sound.Tidal.Hint where
 
 import           Control.Exception
 import           Language.Haskell.Interpreter as Hint
-import Language.Haskell.Interpreter.Unsafe as Hint
+import           Language.Haskell.Interpreter.Unsafe as Hint
 import           Sound.Tidal.Context
 import           System.IO
 import           Control.Concurrent.MVar
