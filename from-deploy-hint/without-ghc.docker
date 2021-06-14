@@ -8,8 +8,7 @@ COPY tidal-listener.tar.gz /root/tidal-listener.tar.gz
 RUN tar xvf tidal-listener.tar.gz
 
 ## Don't know why this is necessary..
-RUN cp /root/tidal-listener/c-libs/libgmp.so.10    /lib/x86_64-linux-gnu/libgmp.so.10 &&\
-    ln -s libtinfo.so.1   /lib/x86_64-linux-gnu/libtinfo.so &&\
+RUN ln -s libtinfo.so.1   /lib/x86_64-linux-gnu/libtinfo.so &&\
     ln -s librt.so.1      /lib/x86_64-linux-gnu/librt.so &&      \
     ln -s libutil.so.1    /lib/x86_64-linux-gnu/libutil.so &&    \
     ln -s libdl.so.2      /lib/x86_64-linux-gnu/libdl.so &&      \

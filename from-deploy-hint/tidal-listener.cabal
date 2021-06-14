@@ -33,3 +33,4 @@ executable tidal-listener
                        tidal-listener
   hs-source-dirs:       app
   default-language:    Haskell2010
+  ld-options: -Wl,-rpath -Wl,$ORIGIN/c-libs
