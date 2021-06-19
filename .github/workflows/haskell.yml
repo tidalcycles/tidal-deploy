@@ -23,7 +23,7 @@ jobs:
       env:
         cache-name: cache-cabal
       with:
-        path: ~/from-deploy-hint/.cabal
+        path: ~/.cabal
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -32,7 +32,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd from-deploy-hint
         cabal update
         cabal build --only-dependencies --enable-tests --enable-benchmarks
     - name: Build
