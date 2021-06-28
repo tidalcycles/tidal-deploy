@@ -32,6 +32,8 @@ jobs:
   
     - name: move GHC libs
       run: | 
+            cd 'C:\tools\'
+            ls
             Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\package.conf.d' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d'
             Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\x86_64-windows-ghc-8.6.5' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\x86_64-windows-ghc-8.6.5'
             Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\llvm-passes' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-passes'
