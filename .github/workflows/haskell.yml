@@ -10,7 +10,11 @@ jobs:
   build:
 
     runs-on: windows-latest
-
+    strategy:
+      matrix:
+        ghc: ['9.0.1']
+        cabal: ['3.4']
+        
     steps:
     - name: Check out code
       uses: actions/checkout@v2
@@ -19,8 +23,8 @@ jobs:
       uses: haskell/actions/setup@v1
       id: setup-haskell-cabal
       with:
-        ghc-version: latest
-        cabal-version: latest
+        ghc-version: ${{ matrix.ghc }}
+        cabal-version: ${{ matrix.cabal }}
         
     - name: Freeze
       run: |
@@ -43,15 +47,15 @@ jobs:
     
     - name: remove unneccessary libs
       run: | 
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\ghc-8.6.5' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\Cabal-2.4.0.1' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\rts' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\bin' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\html' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\latex' -Recurse
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\include' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\ghc-${{ matrix.ghc }}' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\Cabal-${{ matrix.cabal }}' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\rts' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\bin' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\html' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\latex' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\include' -Recurse
     - name: move GHC libs and configs
-      run: Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
+      run: Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.${{ matrix.ghc }}\tools\ghc-${{ matrix.ghc }}\lib\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
     - name: List Folders
       run: |
             cd 'C:\Users\runneradmin\AppData\Roaming'
