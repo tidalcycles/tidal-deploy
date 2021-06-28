@@ -65,6 +65,6 @@ jobs:
       
     - name: List Folders
       run: |
-            cd 'C:\Program Files\Haskell'
+            cd 'C:\sr'
             ls 
     
