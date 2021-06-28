@@ -69,4 +69,5 @@ jobs:
             ls 
             cd 'C:\Users\runneradmin\AppData\Roaming\cabal'
             ls
+            Get-Content 'C:\Users\runneradmin\AppData\Roaming\cabal\config'
     
