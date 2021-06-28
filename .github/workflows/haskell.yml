@@ -38,11 +38,10 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
-            cabal update
-            cabal install
-            cabal build
+            cabal v2-update
+            cabal v2-install
+            cabal v2-build
     
     - name: list packages
       run: ghc-pkg list
