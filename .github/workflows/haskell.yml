@@ -30,11 +30,8 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     
-    - name: cabal update and build
-      run: |
-            cabal update
-            cabal install --dependencies-only
-            cabal build
+    - name: list packages
+      run: ghc-pkg list
     
     - name: remove unneccessary libs
       run: | 
