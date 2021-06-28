@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-haskell@v1
       with:
-        ghc-version: '9.0.1'
-        cabal-version: '3.4'
+        ghc-version: '8.6.5'
+        cabal-version: '3.2'
 
     - name: Cache
       uses: actions/cache@v1
@@ -30,13 +30,5 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: Install dependencies
-      run: |
-        cabal update
-        cabal build --only-dependencies --enable-tests --enable-benchmarks
-    - name: Build
-      run: cabal build
-    - name: Run tests
-      run: cabal test all
     - name: List Folders
       run: ls
