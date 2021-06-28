@@ -44,8 +44,8 @@ jobs:
             cabal v2-install
             cabal v2-build
     
-    - name: list packages
-      run: ghc-pkg list
+    - name: try
+      run: echo 'import Sound.Tidal.Pattern' | ghci
     
     - name: remove unneccessary libs 
       run: | 
