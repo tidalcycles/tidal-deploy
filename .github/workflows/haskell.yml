@@ -42,5 +42,7 @@ jobs:
     - name: move GHC libs and configs
       run: Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
     - name: List Folders
-      run: ls
+      run: |
+            cd 'C:\Users\Public\AppData\cabal\'
+            ls
     
