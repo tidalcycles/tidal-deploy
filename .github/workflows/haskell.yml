@@ -32,14 +32,14 @@ jobs:
   
     - name: move GHC libs
       run: | 
-            cd 'C:\tools\'
+            cd 'C:\Users'
             ls
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\package.conf.d' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d'
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\x86_64-windows-ghc-8.6.5' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\x86_64-windows-ghc-8.6.5'
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\llvm-passes' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-passes'
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\llvm-targets' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-targets'
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\platformConstants' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\platformConstants'
-            Copy-Item -Path 'C:\tools\ghc-8.6.5\lib\settings' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\settings'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\package.conf.d' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\x86_64-windows-ghc-8.6.5' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\x86_64-windows-ghc-8.6.5'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\llvm-passes' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-passes'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\llvm-targets' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-targets'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\platformConstants' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\platformConstants'
+            Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\settings' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\settings'
     - name: List Folders
       run: ls
     
