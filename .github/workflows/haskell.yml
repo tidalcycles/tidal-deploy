@@ -38,11 +38,11 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      if: steps.cache.outputs.cache-hit != 'true'
+      #if: steps.cache.outputs.cache-hit != 'true'
       run: |
             cabal v2-update
             cabal v2-install
-            cabal v2-build
+            cabal v2-build --only-dependencies --enable-tests
     
     - name: try
       run: echo 'import Sound.Tidal.Pattern' | ghci
@@ -65,6 +65,6 @@ jobs:
       
     - name: List Folders
       run: |
-            cd '${{ steps.setup-haskell-cabal.outputs.cabal-store }}'
+            cd 'C:\Users\runneradmin\AppData\Roaming\cabal\'
             ls 
     
