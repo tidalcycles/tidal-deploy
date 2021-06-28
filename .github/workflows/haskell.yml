@@ -43,8 +43,8 @@ jobs:
       run: Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
     - name: List Folders
       run: |
-            cd 'C:\Users\runneradmin\'
-            ls -h
-            cd 'C:\Users\runneradmin\AppData'
+            cd 'C:\Users\runneradmin\AppData\Roaming'
+            ls 
+            cd 'C:\Users\runneradmin\AppData\Roaming\cabal'
             ls
     
