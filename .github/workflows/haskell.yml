@@ -65,6 +65,6 @@ jobs:
       
     - name: List Folders
       run: |
-            cd 'C:\Users\runneradmin\AppData\Roaming\cabal\'
+            cd 'C:\'
             ls 
     
