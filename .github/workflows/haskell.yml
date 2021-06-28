@@ -12,27 +12,30 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-haskell@v1
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Setup Haskell
+      uses: actions/setup-haskell@v1.1.1
+      id: setup-haskell-cabal
       with:
         ghc-version: '8.6.5'
         cabal-version: '3.2'
+        
+    - name: Freeze
+      run: |
+        cabal freeze
 
-    - name: Cache
+    - name: Cache ~/.cabal/store
       uses: actions/cache@v1
-      env:
-        cache-name: cache-cabal
       with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+        path: ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
+        key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
       run: |
             cabal update
+            cabal install
             cabal build
     
     - name: list packages
