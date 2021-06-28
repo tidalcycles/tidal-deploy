@@ -65,9 +65,6 @@ jobs:
       
     - name: List Folders
       run: |
-            cd 'C:\Users\runneradmin\AppData\Roaming'
+            cd 'C:\Program Files\Haskell'
             ls 
-            cd 'C:\Users\runneradmin\AppData\Roaming\cabal'
-            ls
-            Get-Content 'C:\Users\runneradmin\AppData\Roaming\cabal\config'
     
