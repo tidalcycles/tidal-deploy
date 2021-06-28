@@ -33,6 +33,7 @@ jobs:
     - name: cabal update and build
       run: |
             cabal update
+            cabal install --dependencies-only
             cabal build
     
     - name: remove unneccessary libs
