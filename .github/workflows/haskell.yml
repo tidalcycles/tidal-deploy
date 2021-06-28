@@ -65,6 +65,6 @@ jobs:
       
     - name: List Folders
       run: |
-            cd 'C:\'
+            cd '${{ steps.setup-haskell-cabal.outputs.cabal-store }}'
             ls 
     
