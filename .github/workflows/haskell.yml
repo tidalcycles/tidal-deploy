@@ -30,6 +30,11 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     
+    - name: cabal update and build
+      run: |
+            cabal update
+            cabal build
+    
     - name: remove unneccessary libs
       run: | 
             Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\ghc-8.6.5' -Recurse
