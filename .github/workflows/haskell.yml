@@ -32,13 +32,13 @@ jobs:
     
     - name: remove unneccessary libs
       run: | 
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\ghc-8.6.5'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\Cabal-2.4.0.1'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\rts'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\bin'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\html'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\latex'
-            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\include'
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\ghc-8.6.5' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\Cabal-2.4.0.1' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\rts' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\bin' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\html' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\latex' -Recurse
+            Remove-Item 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\include' -Recurse
     - name: move GHC libs and configs
       run: Copy-Item -Path 'C:\ProgramData\chocolatey\lib\ghc.8.6.5\tools\ghc-8.6.5\lib\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
     - name: List Folders
