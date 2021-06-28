@@ -32,11 +32,7 @@ jobs:
   
     - name: cd
       run: | 
-            cd ..
-            ls
-            cd ..
-            ls
-            cd ..
+            cd 'C:\'
             ls
     - name: List Folders
       run: ls
