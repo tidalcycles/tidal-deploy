@@ -33,7 +33,7 @@ jobs:
     - name: Cache ~/.cabal/store
       uses: actions/cache@v1
       with:
-        path: ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
+        path: 'C:\Users\runneradmin\AppData\Roaming\cabal'
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
@@ -49,7 +49,7 @@ jobs:
       run: | 
             Remove-Item 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\ghc-${{ matrix.ghc }}' -Recurse
             Remove-Item 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\Cabal-${{ matrix.cabal }}' -Recurse
-            Remove-Item 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\rts' -Recurse
+            Remove-Item 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\rts-1.0' -Recurse
     - name: move GHC libs and configs
       run: |
             Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\'
