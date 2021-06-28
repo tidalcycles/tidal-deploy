@@ -19,8 +19,8 @@ jobs:
       uses: actions/setup-haskell@v1.1.1
       id: setup-haskell-cabal
       with:
-        ghc-version: '8.6.5'
-        cabal-version: '3.2'
+        ghc-version: latest
+        cabal-version: latest
         
     - name: Freeze
       run: |
