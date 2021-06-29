@@ -35,22 +35,25 @@ interpretPat = do
      pat <- interpret "pure \"bd \"" (as :: Pattern String)
      return (show pat)
 
+args:: String -> [String]
+args lib = ["-clear-package-db", "-package-db", lib ++ "/package.conf.d", "-package-db", lib ++ "/package.db", "-v"]
+
 main :: IO ()
 main = do
     putStrLn "Enter libdir: \n"
     lib <- readLn
 
-    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretDiag ())
+    r <- unsafeRunInterpreterWithArgsLibdir (args lib) lib (interpretDiag ())
     printf "(\\x -> (x,x)) %s is:\n" (show "()")
     print r
 
     putStrLn "and now, let's try the Prelude..."
-    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretId ())
+    r <- unsafeRunInterpreterWithArgsLibdir (args lib) lib (interpretId ())
     printf "id %s is:\n" (show "()")
     print r
 
     putStrLn "a library from hackage:"
-    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretAsk ())
+    r <- unsafeRunInterpreterWithArgsLibdir (args lib) lib (interpretAsk ())
     printf "runReader ask %s is:\n" (show "()")
     case r of
       Left err -> print err
@@ -58,7 +61,7 @@ main = do
         print r
 
     putStrLn "a tidal pattern:"
-    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib  interpretPat
+    r <- unsafeRunInterpreterWithArgsLibdir (args lib) lib  interpretPat
     case r of
       Left err -> print err
       Right r -> do
