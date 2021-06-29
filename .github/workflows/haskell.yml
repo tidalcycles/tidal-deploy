@@ -74,6 +74,11 @@ jobs:
             $configs = Get-ChildItem 'D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db\' -Recurse
             $configs | %{ (gc $_) -replace "C:\\sr\\ghc-9.0.1", '${pkgroot}\packages' | Set-Content $_.fullname}
    
+    - name: ghc-pkg recache
+      run: | 
+            $ENV: GHC_PACKAGE_PATH= "D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d;D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db"
+            ghc-pkg recache
+   
     - name: Compress binary
       uses: svenstaro/upx-action@2.0.1
       with:
