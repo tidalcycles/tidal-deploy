@@ -34,13 +34,11 @@ jobs:
       uses: actions/cache@v2
       id: cache
       with:
-        path: |
-               'C:\sr'
-               'C:\Users\runneradmin\AppData\Roaming\cabal\'
+        path: 'C:\sr'
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      if: steps.cache.outputs.cache-hit != 'true'
+      #if: steps.cache.outputs.cache-hit != 'true'
       run: |
             cabal v2-update
             cabal v2-install
