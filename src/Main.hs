@@ -40,17 +40,17 @@ main = do
     putStrLn "Enter libdir: \n"
     lib <- readLn
 
-    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretDiag ())
+    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretDiag ())
     printf "(\\x -> (x,x)) %s is:\n" (show "()")
     print r
 
     putStrLn "and now, let's try the Prelude..."
-    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretId ())
+    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretId ())
     printf "id %s is:\n" (show "()")
     print r
 
     putStrLn "a library from hackage:"
-    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretAsk ())
+    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib (interpretAsk ())
     printf "runReader ask %s is:\n" (show "()")
     case r of
       Left err -> print err
@@ -58,7 +58,7 @@ main = do
         print r
 
     putStrLn "a tidal pattern:"
-    r <- unsafeRunInterpreterWithArgsLibdir [] lib  interpretPat
+    r <- unsafeRunInterpreterWithArgsLibdir ["-v"] lib  interpretPat
     case r of
       Left err -> print err
       Right r -> do
