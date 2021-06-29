@@ -68,8 +68,13 @@ jobs:
     - name: move installed packages
       run: Copy-Item -Path 'C:\sr\ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\packages'
    
+    - name: Compress binary
+      uses: svenstaro/upx-action@2.0.1
+      with:
+        file: 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\build\x86_64-windows\ghc-9.0.1\my-program-0.1.0.0\x\my-program\build\my-program\my-program.exe'
+   
     - name: move executable
-      run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\dist\'
+      run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\build\x86_64-windows\ghc-9.0.1\my-program-0.1.0.0\x\my-program\build\my-program\my-program.exe' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\my-program.exe'
       
     - name: zip files
       run: Compress-Archive -LiteralPath 'D:\a\tidal-deploy\tidal-deploy\binary\' -DestinationPath 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
