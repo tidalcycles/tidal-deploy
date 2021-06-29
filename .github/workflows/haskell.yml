@@ -67,10 +67,18 @@ jobs:
       run: |
             Copy-Item -Path 'C:\sr\ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\packages'
    
+    - name: Compress binary
+      uses: svenstaro/upx-action@2.0.1
+      with:
+        file: ${{ env.BINARY_PATH }}
+   
     - name: move executable
-      run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\sdist' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\sdist'
-    
+      run: Copy-Item -Path '${{ env.BINARY_PATH }}' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\my-program.exe'
+      
+    - name: zip files
+      run: Compress-Archive -LiteralPath 'D:\a\tidal-deploy\tidal-deploy\binary\' -DestinationPath 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
+
     - uses: actions/upload-artifact@v2
       with:
-        name: my-artifact
-        path: 'D:\a\tidal-deploy\tidal-deploy\binary\'
+        name: my-program
+        path: 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
