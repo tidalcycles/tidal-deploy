@@ -40,7 +40,7 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      #if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
             cabal v2-update
             cabal v2-install
@@ -59,6 +59,7 @@ jobs:
             Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\llvm-targets' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\llvm-targets'
             Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\platformConstants' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\platformConstants'
             Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\settings' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\settings'
+            
     - name: move mingw
       run: Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\mingw'
    
@@ -67,5 +68,9 @@ jobs:
             Copy-Item -Path 'C:\sr\ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\packages'
    
     - name: move executable
-      run: Copy-Item 'C:\Users\runneradmin\AppData\Roaming\cabal\bin\my-program.exe' 'D:\a\tidal-deploy\tidal-deploy\binary\my-program.exe'
+      run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\sdist' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\sdist'
     
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: 'D:\a\tidal-deploy\tidal-deploy\binary\'
