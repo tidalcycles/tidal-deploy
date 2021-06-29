@@ -79,11 +79,6 @@ jobs:
             $ENV:GHC_PACKAGE_PATH="D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d;D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db"
             ghc-pkg recache
    
-    - name: Compress binary
-      uses: svenstaro/upx-action@2.0.1
-      with:
-        file: 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\build\x86_64-windows\ghc-9.0.1\my-program-0.1.0.0\x\my-program\build\my-program\my-program.exe'
-   
     - name: move executable
       run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\build\x86_64-windows\ghc-9.0.1\my-program-0.1.0.0\x\my-program\build\my-program\my-program.exe' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\my-program.exe'
       
