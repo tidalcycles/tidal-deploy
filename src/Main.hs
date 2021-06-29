@@ -5,6 +5,7 @@ import Language.Haskell.Interpreter
 import Language.Haskell.Interpreter.Unsafe
 import Sound.Tidal.Pattern
 import Sound.Tidal.Show
+import System.Environment
 
 
 interpretDiag :: () -> Interpreter ((),())
@@ -14,7 +15,7 @@ interpretDiag u = do
 
 interpretId :: () -> Interpreter ()
 interpretId u = do
-    setImports ["Prelude"]
+    setImports ["Prelude", "System.Clock"]
     f <- interpret "id" (as :: () -> ())
     return (f u)
 
@@ -34,34 +35,30 @@ interpretPat = do
      pat <- interpret "pure \"bd \"" (as :: Pattern String)
      return (show pat)
 
-libdir :: String
-libdir = "haskell-libs"
-
-
 main :: IO ()
 main = do
-    putStrLn "please type '()':"
-    u <- readLn
+    putStrLn "Enter libdir: \n"
+    lib <- readLn
 
-    r <- unsafeRunInterpreterWithArgsLibdir [] libdir (interpretDiag u)
-    printf "(\\x -> (x,x)) %s is:\n" (show u)
+    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretDiag ())
+    printf "(\\x -> (x,x)) %s is:\n" (show "()")
     print r
 
     putStrLn "and now, let's try the Prelude..."
-    r <- unsafeRunInterpreterWithArgsLibdir [] libdir (interpretId u)
-    printf "id %s is:\n" (show u)
+    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretId ())
+    printf "id %s is:\n" (show "()")
     print r
 
     putStrLn "a library from hackage:"
-    r <- unsafeRunInterpreterWithArgsLibdir [] libdir (interpretAsk u)
-    printf "runReader ask %s is:\n" (show u)
+    r <- unsafeRunInterpreterWithArgsLibdir [] lib (interpretAsk ())
+    printf "runReader ask %s is:\n" (show "()")
     case r of
       Left err -> print err
       Right r -> do
         print r
 
     putStrLn "a tidal pattern:"
-    r <- unsafeRunInterpreterWithArgsLibdir [] libdir interpretPat
+    r <- unsafeRunInterpreterWithArgsLibdir [] lib  interpretPat
     case r of
       Left err -> print err
       Right r -> do
