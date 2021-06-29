@@ -38,14 +38,11 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      #if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
             cabal v2-update
             cabal v2-install
             cabal v2-build --only-dependencies --enable-tests
-    
-    - name: try
-      run: echo 'import Sound.Tidal.Pattern' | ghci
     
     - name: remove unneccessary libs 
       run: | 
@@ -62,7 +59,11 @@ jobs:
             Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\settings' -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\settings'
     - name: move mingw
       run: Copy-Item -Path 'C:\tools\ghc-${{ matrix.ghc }}\lib\x86_64-windows-ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\mingw'
-      
+   
+    - name: move installed packages
+      run: |
+            Copy-Item -Path 'C:\sr\ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\packages'
+   
     - name: List Folders
       run: |
             cd 'C:\sr\ghc-${{ matrix.ghc }}'
