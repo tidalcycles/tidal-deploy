@@ -76,7 +76,7 @@ jobs:
    
     - name: ghc-pkg recache
       run: | 
-            $ENV: GHC_PACKAGE_PATH= "D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d;D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db"
+            $ENV:GHC_PACKAGE_PATH="D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d;D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db"
             ghc-pkg recache
    
     - name: Compress binary
