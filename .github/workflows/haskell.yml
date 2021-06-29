@@ -38,11 +38,7 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
     
     - name: cabal update and build
-      #if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-            cabal v2-update
-            cabal v2-install
-            cabal v2-build --only-dependencies --enable-tests
+      run: cabal v2-build --only-dependencies --enable-tests
     
     - name: remove unneccessary libs 
       run: | 
@@ -65,13 +61,8 @@ jobs:
       run: |
             Copy-Item -Path 'C:\sr\ghc-${{ matrix.ghc }}\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\libs\packages'
    
-    - name: Compress binary
-      uses: svenstaro/upx-action@2.0.1
-      with:
-        file: ${{ env.BINARY_PATH }}
-   
     - name: move executable
-      run: Copy-Item -Path '${{ env.BINARY_PATH }}' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\my-program.exe'
+      run: Copy-Item -Path 'D:\a\tidal-deploy\tidal-deploy\dist-newstyle\' -Recurse -Destination 'D:\a\tidal-deploy\tidal-deploy\binary\dist\'
       
     - name: zip files
       run: Compress-Archive -LiteralPath 'D:\a\tidal-deploy\tidal-deploy\binary\' -DestinationPath 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
