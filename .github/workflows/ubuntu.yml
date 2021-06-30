@@ -48,7 +48,7 @@ jobs:
     
     - name: remove unneccessary libs 
       run: | 
-            ls '~/opt/ghc/${{ matrix.ghc }}/'
+            ls
             
    # - name: move GHC libs and configs
    #   run: |
