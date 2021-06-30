@@ -48,7 +48,7 @@ jobs:
     
     - name: remove unneccessary libs 
       run: |
-            cd '~/.cabal'
+            cd ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
             ls
 
             
