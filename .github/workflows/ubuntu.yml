@@ -46,6 +46,10 @@ jobs:
     - name: cabal update and build
       run: cabal v2-build --enable-tests
     
+    - name : make directory
+      run: mkdir binary/haskell-libs
+           ls
+    
     - name: remove unneccessary libs 
       run: |
             cd ${{ steps.setup-haskell-cabal.outputs.cabal-store }}/ghc-${{ matrix.ghc }}
@@ -56,10 +60,12 @@ jobs:
       run: |
             cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
             cd ..
+            cd lib
             ls
+            cd ghc-${{ matrix.ghc }}
             
-   # - name: move installed packages
-   #   run: ls '~/.cabal/store/ghc-${{ matrix.ghc }}/
+    - name: move installed packages
+      run: mkdir binary/haskell-libs/packages
    
     #- name: change paths in config files
     #  run: |
