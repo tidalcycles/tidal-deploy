@@ -65,7 +65,7 @@ jobs:
             
     - name: move GHC libs and configs
       run: |
-            mkdir binary/haskell-libs/ghc-packages
+            mkdir binary/haskell-libs/ghc-packages/
             cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
             cd ..
             cd lib
