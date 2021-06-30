@@ -48,15 +48,14 @@ jobs:
     
     - name: remove unneccessary libs 
       run: |
-            cd ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
+            cd ${{ steps.setup-haskell-cabal.outputs.cabal-store }}/ghc-${{ matrix.ghc }}
             ls
 
             
     - name: move GHC libs and configs
       run: |
             cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
-            ls
-            cd ${{ steps.setup-haskell-cabal.outputs.cabal-path }}
+            cd ..
             ls
             
    # - name: move installed packages
