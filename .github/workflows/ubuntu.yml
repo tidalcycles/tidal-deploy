@@ -52,8 +52,10 @@ jobs:
             ls
 
             
-   # - name: move GHC libs and configs
-   #   run: |
+    - name: move GHC libs and configs
+      run: |
+            cd ${{ steps.setup-haskell-cabal.outputs.ghc }}
+            ls
             
    # - name: move installed packages
    #   run: ls '~/.cabal/store/ghc-${{ matrix.ghc }}/
