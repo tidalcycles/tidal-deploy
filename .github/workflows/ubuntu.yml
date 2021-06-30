@@ -59,21 +59,21 @@ jobs:
             cd ..
             cd lib
             cd ghc-${{ matrix.ghc }}
-            ls
-
+            rm -r ghc-${{ matrix.ghc }}
+            rm -r Cabal-${{ matrix.cabal }}
+            rm -r rts
             
     - name: move GHC libs and configs
       run: |
             cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
             cd ..
             cd lib
-            ls
-            cd ghc-${{ matrix.ghc }}
+            cp -r ghc-${{ matrix.ghc }} binary/haskell-libs/ghc-${{ matrix.ghc }}
             
     - name: move installed packages
       run: | 
             mkdir binary/haskell-libs/packages
-            cp ${{ steps.setup-haskell-cabal.outputs.cabal-store }}/ghc-${{ matrix.ghc }} binary/haskell-libs/packages
+            cp -r ${{ steps.setup-haskell-cabal.outputs.cabal-store }}/ghc-${{ matrix.ghc }} binary/haskell-libs/packages
    
     #- name: change paths in config files
     #  run: |
