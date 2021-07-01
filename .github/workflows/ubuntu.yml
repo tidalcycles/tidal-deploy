@@ -93,7 +93,7 @@ jobs:
       run: |
             mkdir binary/bin
             cp -r fake_gcc.sh binary/bin/fake_gcc.sh
-            sed -i 's/cc/${pkgroot}\/bin\/fake_gcc.sh/g'
+            sed -i 's/cc/${pkgroot}\/bin\/fake_gcc.sh/g' binary/bin/fake_gcc.sh
    
     - name: move executable
       run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
