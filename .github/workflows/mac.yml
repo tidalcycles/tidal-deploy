@@ -120,7 +120,7 @@ jobs:
     - name: try
       run : | 
              cd /Users/runner/work/tidal-deploy/tidal-deploy/binary
-             echo "haskell-libs" | ./my-program
+             echo \"haskell-libs\" | ./my-program
   
     - name: zip files
       run: |
