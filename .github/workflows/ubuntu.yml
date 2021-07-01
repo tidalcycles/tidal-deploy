@@ -85,7 +85,7 @@ jobs:
             mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/llvm-passes /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/llvm-passes
 
     - name: ghc-pkg recache
-      run: ghc-pkg --package-db=home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db recache
+      run: ghc-pkg --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db recache
    
     - name: remove unneccessary libs 
       run: |
