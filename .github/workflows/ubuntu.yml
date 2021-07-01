@@ -87,9 +87,9 @@ jobs:
       run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
   
     - name: zip files
-      run: tar cvfj binary.tar /binary
+      run: tar cvfj binary.tar /home/runner/work/tidal-deploy/tidal-deploy/binary/*
 
     - uses: actions/upload-artifact@v2
       with:
         name: my-program
-        path: /binary
+        path: /home/runner/work/tidal-deploy/tidal-deploy/binary.tar
