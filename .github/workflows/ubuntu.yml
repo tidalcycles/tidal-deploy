@@ -85,12 +85,12 @@ jobs:
     - name: change paths in config files (cabal)
       run: |
             mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/packages/package.db /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db
-            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/\/${pkgroot}\/ghc-packages/g' /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/*
+            sed -i 's/\/home\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/*
             
-    #- name: ghc-pkg recache
-    #  run: | 
-   #          $ENV:GHC_PACKAGE_PATH="D:\a\tidal-deploy\tidal-deploy\binary\libs\package.conf.d;D:\a\tidal-deploy\tidal-deploy\binary\libs\package.db"
-  #           ghc-pkg recache
+    - name: ghc-pkg recache
+      run: | 
+            GHC_PACKAGE_PATH="/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d;/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db"
+            ghc-pkg recache
    
     - name: move executable
       run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
