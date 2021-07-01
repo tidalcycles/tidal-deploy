@@ -78,6 +78,9 @@ jobs:
      
     - name: change paths in config files (cabal)
       run: |
+            export LANG=C
+            export LC_CTYPE=C
+            export LC_ALL=C
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/packages/package.db /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db
             cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/
             sed -i '' 's+/opt/ghc/${{ matrix.ghc }}/lib/ghc-${{ matrix.ghc }}+${pkgroot}/packages+g' *
@@ -104,6 +107,9 @@ jobs:
             
     - name: fake gcc
       run: |
+            export LANG=C
+            export LC_CTYPE=C
+            export LC_ALL=C
             mkdir binary/bin
             cp -R fake_gcc.sh binary/bin/fake_gcc.sh
             sed -i '' 's+cc+bin/fake_gcc.sh+g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
