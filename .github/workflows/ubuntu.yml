@@ -76,7 +76,14 @@ jobs:
       run: |
             mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/packages/package.db /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db
             sed -i 's/\/home\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/*
-            
+   
+    - name: move ghc settings etc
+      run: |
+            mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/settings /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
+            mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/platformConstants /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/platformConstants
+            mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/llvm-targets /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/llvm-targets
+            mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/llvm-passes /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/llvm-passes
+
     - name: ghc-pkg recache
       run: | 
             GHC_PACKAGE_PATH="/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d;/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db"
