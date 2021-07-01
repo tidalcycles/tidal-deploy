@@ -83,13 +83,13 @@ jobs:
     #- name: ghc-pkg recache
     #  run: | 
    
-   # - name: move executable
-   #   run: 
-      
-    #- name: zip files
-    #  run: Compress-Archive -LiteralPath 'D:\a\tidal-deploy\tidal-deploy\binary\' -DestinationPath 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
+    - name: move executable
+      run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
+  
+    - name: zip files
+      run: tar cvfj binary.tar /binary
 
-    #- uses: actions/upload-artifact@v2
-    #  with:
-    #    name: my-program
-    #    path: 'D:\a\tidal-deploy\tidal-deploy\binary.zip'
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-program
+        path: /binary
