@@ -69,7 +69,7 @@ jobs:
             cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
             cd ..
             cd lib
-            cp -r ghc-${{ matrix.ghc }}/* binary/haskell-libs/ghc-packages
+            cp -r ghc-${{ matrix.ghc }}/* /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages
             
     - name: move installed packages
       run: | 
