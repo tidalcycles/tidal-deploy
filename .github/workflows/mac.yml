@@ -70,12 +70,14 @@ jobs:
     - name: change paths in config files (GHC)
       run: |
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/package.conf.d /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d
-            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/${pkgroot}\/ghc-packages/g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/*
+            cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/
+            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/${pkgroot}\/ghc-packages/g' *
      
     - name: change paths in config files (cabal)
       run: |
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/packages/package.db /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db
-            sed -i 's/\/Users\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/*
+            cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/
+            sed -i 's/\/Users\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' *
    
     - name: move ghc settings etc
       run: |
