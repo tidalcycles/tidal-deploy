@@ -52,16 +52,6 @@ jobs:
             mkdir binary/haskell-libs/
             mkdir binary/c-libs/
             ls
-    
-    - name: remove unneccessary libs 
-      run: |
-            cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
-            cd ..
-            cd lib
-            cd ghc-${{ matrix.ghc }}
-            rm -r ghc-${{ matrix.ghc }}
-            rm -r Cabal-${{ matrix.cabal }}
-            rm -r rts
             
     - name: move GHC libs and configs
       run: |
@@ -91,6 +81,13 @@ jobs:
       run: | 
             GHC_PACKAGE_PATH="/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d;/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db"
             ghc-pkg recache
+   
+    - name: remove unneccessary libs 
+      run: |
+            cd /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages
+            rm -r ghc-${{ matrix.ghc }}
+            rm -r Cabal-${{ matrix.cabal }}
+            rm -r rts
    
     - name: move executable
       run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
