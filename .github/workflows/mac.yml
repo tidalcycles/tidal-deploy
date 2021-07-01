@@ -69,6 +69,9 @@ jobs:
    
     - name: change paths in config files (GHC)
       run: |
+            export LANG=C
+            export LC_CTYPE=C
+            export LC_ALL=C
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/package.conf.d /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d
             cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/
             sed -i '' 's+/opt/ghc/${{ matrix.ghc }}/lib/ghc-${{ matrix.ghc }}+${pkgroot}/ghc-packages+g' *
