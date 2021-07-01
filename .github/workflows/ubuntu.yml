@@ -90,6 +90,9 @@ jobs:
             ghc-pkg --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db recache
             ghc-pkg --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d --package-db=/home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db check
    
+    - name: move c-libs
+      run: ls /usr/lib/x86_64-linux-gnu/
+   
     - name: remove unneccessary libs 
       run: |
             cd /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages
