@@ -70,7 +70,7 @@ jobs:
     - name: change paths in config files (GHC)
       run: |
             mv /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/package.conf.d /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d
-            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/\/${pkgroot}\/ghc-packages/g' /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/*
+            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/${pkgroot}\/ghc-packages/g' /home/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/*
      
     - name: change paths in config files (cabal)
       run: |
@@ -88,12 +88,20 @@ jobs:
             rm -r ghc-${{ matrix.ghc }}
             rm -r Cabal-${{ matrix.cabal }}
             rm -r rts
+            
+    - name: fake gcc
+      run: |
+            mkdir binary/bin
+            cp -r fake_gcc.sh binary/bin/fake_gcc.sh
+            sed -i 's/cc/${pkgroot}\/bin\/fake_gcc.sh/g'
    
     - name: move executable
       run: cp -r dist-newstyle/build/x86_64-linux/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
   
     - name: zip files
-      run: tar cvfj binary.tar /home/runner/work/tidal-deploy/tidal-deploy/binary/*
+      run: |
+            cd /home/runner/work/tidal-deploy/tidal-deploy/
+            tar cvfj binary.tar binary/*
 
     - uses: actions/upload-artifact@v2
       with:
