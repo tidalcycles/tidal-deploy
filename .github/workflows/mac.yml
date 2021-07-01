@@ -112,7 +112,7 @@ jobs:
             export LC_ALL=C
             mkdir binary/bin
             cp -R fake_gcc.sh binary/bin/fake_gcc.sh
-            sed -i '' 's+cc+bin/fake_gcc.sh+g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
+            sed -i '' 's+gcc+bin/fake_gcc.sh+g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
    
     - name: move executable
       run: cp -R dist-newstyle/build/x86_64-osx/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
