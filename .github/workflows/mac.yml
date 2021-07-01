@@ -71,13 +71,13 @@ jobs:
       run: |
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/ghc-packages/package.conf.d /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d
             cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.conf.d/
-            sed -i 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/${pkgroot}\/ghc-packages/g' *
+            sed -i '' 's/\/opt\/ghc\/${{ matrix.ghc }}\/lib\/ghc-${{ matrix.ghc }}/${pkgroot}\/ghc-packages/g' *
      
     - name: change paths in config files (cabal)
       run: |
             mv /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/packages/package.db /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db
             cd /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/package.db/
-            sed -i 's/\/Users\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' *
+            sed -i '' 's/\/Users\/runner\/.cabal\/store\/ghc-${{ matrix.ghc }}/${pkgroot}\/packages/g' *
    
     - name: move ghc settings etc
       run: |
@@ -103,7 +103,7 @@ jobs:
       run: |
             mkdir binary/bin
             cp -R fake_gcc.sh binary/bin/fake_gcc.sh
-            sed -i 's/cc/bin\/fake_gcc.sh/g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
+            sed -i '' 's/cc/bin\/fake_gcc.sh/g' /Users/runner/work/tidal-deploy/tidal-deploy/binary/haskell-libs/settings
    
     - name: move executable
       run: cp -R dist-newstyle/build/x86_64-osx/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
