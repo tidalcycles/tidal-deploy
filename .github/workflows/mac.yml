@@ -117,12 +117,10 @@ jobs:
     - name: move executable
       run: cp -R dist-newstyle/build/x86_64-osx/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
   
-    - name: remove ghc (for testing)
+    - name: remove ghc + cabal (for testing)
       run: |
-            cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
-            cd ..
-            cd lib
-            rm -R ghc-${{ matrix.ghc }}
+            rm -R  /Users/runner/.ghcup/ghc/9.0.1
+            rm -R ${{ steps.setup-haskell-cabal.outputs.cabal-store }}/ghc-${{ matrix.ghc }}
     
     - name: try
       run : | 
