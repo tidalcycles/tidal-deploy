@@ -117,6 +117,13 @@ jobs:
     - name: move executable
       run: cp -R dist-newstyle/build/x86_64-osx/ghc-9.0.1/my-program-0.1.0.0/x/my-program/build/my-program/my-program binary/my-program
   
+    - name: remove ghc (for testing)
+      run: |
+            cd ${{ steps.setup-haskell-cabal.outputs.ghc-path }}
+            cd ..
+            cd lib
+            rm -R ghc-${{ matrix.ghc }}
+    
     - name: try
       run : | 
              cd /Users/runner/work/tidal-deploy/tidal-deploy/binary
