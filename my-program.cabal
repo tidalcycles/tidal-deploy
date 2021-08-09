@@ -18,7 +18,7 @@ executable my-program
   main-is:             Main.hs
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base == 4.*
+  build-depends:       base
                      , transformers == 0.5.6.2
                      , hint
                      , exceptions
